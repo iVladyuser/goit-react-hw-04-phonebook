@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ContactItem } from './ContactList.styles';
+import { List, ContactItem } from './ContactList.styled';
 import ContactCard from '../ContactCard/ContactCard';
 
 const ContactList = ({ contacts, onDeleteContact }) => {

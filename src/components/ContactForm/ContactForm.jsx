@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormInput, Form, FormButton, FormLabel } from './ContactForm.style';
+import { FormInput, Form, FormButton, FormLabel } from './ContactForm.styled';
 
 class ContactForm extends Component {
   state = {
