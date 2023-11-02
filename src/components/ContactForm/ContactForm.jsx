@@ -1,55 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FormInput, Form, FormButton, FormLabel } from './ContactForm.styled';
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
+const ContactForm = ({ onSubmit }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const handleInputChange = e => {
+    const { name, value } = e.currentTarget;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+
+      default:
+        break;
+    }
   };
 
-  handleInputChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     const contactSchema = {
-      name: this.state.name,
-      number:
-        Number.parseFloat(this.state.number) || alert(`Number is not correct`),
+      name,
+      number: Number.parseFloat(number) || alert(`Number is not correct`),
     };
-    this.props.onSubmit(contactSchema);
-    this.setState({ name: '', number: '' });
+    onSubmit(contactSchema);
+    setName('');
+    setNumber('');
   };
 
-  render() {
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormLabel htmlFor="name">Name</FormLabel>
-        <FormInput
-          type="text"
-          name="name"
-          onChange={this.handleInputChange}
-          value={this.state.name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          required
-        />
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLabel htmlFor="name">Name</FormLabel>
+      <FormInput
+        type="text"
+        name="name"
+        onChange={handleInputChange}
+        value={name}
+        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        required
+      />
 
-        <FormLabel htmlFor="number">Number</FormLabel>
-        <FormInput
-          type="tel"
-          name="number"
-          value={this.state.number}
-          onChange={this.handleInputChange}
-          pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
-          required
-        />
+      <FormLabel htmlFor="number">Number</FormLabel>
+      <FormInput
+        type="tel"
+        name="number"
+        value={number}
+        onChange={handleInputChange}
+        pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
+        required
+      />
 
-        <FormButton type="submit">Add contact</FormButton>
-      </Form>
-    );
-  }
-}
+      <FormButton type="submit">Add contact</FormButton>
+    </Form>
+  );
+};
 
 export default ContactForm;
